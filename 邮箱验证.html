@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>邮箱验证</title>
+	<meta charset="utf-8">
+</head>
+<style>
+	.work_div{
+		width: 500px;
+		height: 400px;
+		margin: 0 auto;
+	}
+	#msgDiv {
+    	z-index:10001;
+    	width:400px;
+    	height:300px;
+    	background:white;
+    	border:#336699 1px solid;
+    	position:absolute;
+    	left:50%;
+    	top:50%;
+    	font-size:12px;
+    	margin-left:-200px;
+    	margin-top: -150px;
+    display: none;
+	}
+	#bgDiv {
+    	display: none;
+    	position: absolute;
+    	top: 0px;
+    	left: 0px;
+    	right:0px;
+    	background-color: #777;
+    	filter:progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75);
+    	opacity: 0.6;
+    	-moz-opacity:0.6;
+	}
+</style>
+<body>
+	<div class="work_div">
+	<form id="wrk_form" method="post">
+		<label>邮箱:
+			<input type="text" id="email" name="email">
+		</label>
+		<button type="button" onClick="checkEmail()">提交</button>
+	</form>
+	</div>
+	<div id="msgDiv">
+		<div id="msgShut">关闭</div>
+    	<div id="msgDetail"></div>
+	</div>
+	<div id="bgDiv"></div>
+	
+</body>
+<script>
+	//校对邮箱
+	function checkEmail(){
+		
+		var email = document.getElementById('email');
+		//邮箱验证正则表达式
+		var myreg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		 if(!myreg.test(email.value)){
+
+		 	var msgDiv = document.getElementById("msgDiv");
+			msgDiv.style.marginTop = -75 + document.documentElement.scrollTop + "px";
+			
+			var bgDiv = document.getElementById("bgDiv");
+			bgDiv.style.width = document.body.offsetwidth + "px";
+			bgDiv.style.height = screen.height + "px";
+			
+			var msgShut = document.getElementById("msgShut");
+			msgShut.onclick = function(){
+				bgDiv.style.display = msgDiv.style.display = "none";
+			}
+			
+			msgDiv.style.display = bgDiv.style.display = "block";
+			var msgDetail = document.getElementById("msgDetail");
+			msgDetail.innerHTML = "<p style='line-height:50px;font-size:30px;text-align:center'>		邮箱格式错误！</p>";
+		}else{
+				document.getElementById('wrk_form').submit();
+		}
+	}
+	
+</script>
+</html>

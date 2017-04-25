@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jquery插件</title>
+	<meta charset="utf-8">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<style>
+	#test1{
+		width: 200px;
+		height: 100px;
+		background: yellow;
+	}
+	#test2{
+		width: 200px;
+		height: 100px;
+		background: blue;
+	}
+</style>
+<body>
+	<div id="test1"></div>
+	<div id= "test2"></div>
+	<div id="tooltip"></div>
+</body>
+<script>
+	$.fn.extend({
+		tooltip: function(divId, message) {
+			var div = $("#" + divId); //要浮动在这个元素旁边的层
+   			div.css("position", "absolute");//让这个层可以绝对定位
+   			var self = $(this); //当前对象
+   			self.hover(function() {
+   				div.css("display", "block");
+   				var p = self.position(); //获取这个元素的left和top
+   				var x = p.left + self.width();//获取这个浮动层的left
+   				var docWidth = $(document).width();//获取网页的宽
+   				if (x > docWidth - div.width() - 20) {
+   					    x = p.left - div.width();
+   				}
+   				div.css("left", x);
+   				div.css("top", p.top);
+   				div.html(message);
+   			},
+   			function() {
+   				div.css("display", "none");
+		}
+    );
+
+    return this;
+	}
+	});
+	$("#test1").tooltip("tooltip","显示这个浮层test1");
+	$("#test2").tooltip("tooltip","显示这个浮层test2");
+</script>
+</html>
